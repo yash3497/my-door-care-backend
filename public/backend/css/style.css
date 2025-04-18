@@ -107,7 +107,7 @@ body {
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5em;
-    color: #6e768e;
+    color: #00a69d;
     overflow-x: hidden;
 }
 
@@ -795,7 +795,7 @@ blockquote .quote-icon {
     position: absolute;
     font-size: 16px;
     line-height: 38px;
-    color: #6e768e;
+    color: #00a69d;
     left: 10px;
     top: 2px;
 }
@@ -885,7 +885,7 @@ blockquote .quote-icon {
 .custom-table tbody tr td {
     border: none;
     font-weight: 500;
-    color: #6e768e;
+    color: #00a69d;
     font-size: 14px;
     padding: 10px 15px;
 }
@@ -1039,7 +1039,7 @@ blockquote .quote-icon {
     background-color: #ffffff;
     border: 1px solid #eeeeee;
     border-radius: 50%;
-    color: #6e768e;
+    color: #00a69d;
     display: inline-block;
     text-align: center;
     position: relative;
@@ -1090,7 +1090,7 @@ blockquote .quote-icon {
     border-radius: 5px;
     background: transparent;
     border: 1px solid #eeeeee;
-    color: #6e768e;
+    color: #00a69d;
     padding: 0;
     font-weight: 600;
     line-height: 30px;
@@ -1101,7 +1101,7 @@ blockquote .quote-icon {
 .pagination .page-item.disabled span {
     background: transparent;
     border: 1px solid #eeeeee;
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .pagination .page-item .page-link {
@@ -1352,7 +1352,7 @@ blockquote .quote-icon {
     transition: color 0.7s cubic-bezier(0.545, 0, 0.05, 1);
     font-weight: 600;
     border-radius: 5px;
-    color: #6e768e;
+    color: #00a69d;
     margin-bottom: 0;
 }
 
@@ -1369,7 +1369,7 @@ blockquote .quote-icon {
 }
 
 .custom-card .card-body .card-form .toggle-container .switch-toggles.active .switch {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .custom-card .card-body .card-form .toggle-container .switch-toggles.active .switch:nth-child(even) {
@@ -1523,7 +1523,7 @@ blockquote .quote-icon {
     transition: color 0.7s cubic-bezier(0.545, 0, 0.05, 1);
     font-weight: 600;
     border-radius: 5px;
-    color: #6e768e;
+    color: #00a69d;
     margin-bottom: 0;
 }
 
@@ -1540,7 +1540,7 @@ blockquote .quote-icon {
 }
 
 .toggle-container .switch-toggles.active .switch {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .toggle-container .switch-toggles.active .switch:nth-child(even) {
@@ -2259,7 +2259,7 @@ option {
 }
 
 select.form--control {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .form--control {
@@ -2285,23 +2285,23 @@ select.form--control {
 }
 
 .form--control::-webkit-input-placeholder {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .form--control::-moz-placeholder {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .form--control:-ms-input-placeholder {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .form--control::-ms-input-placeholder {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .form--control::placeholder {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .radio-form-group {
@@ -2432,7 +2432,7 @@ select.form--control {
     margin: 0;
     width: 100%;
     line-height: 20px !important;
-    color: #6e768e !important;
+    color: #00a69d !important;
     font-weight: 600;
 }
 
@@ -2445,11 +2445,11 @@ select.form--control {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: #6e768e transparent transparent transparent;
+    border-color: #00a69d transparent transparent transparent;
 }
 
 .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-    border-color: transparent transparent #6e768e transparent;
+    border-color: transparent transparent #00a69d transparent;
 }
 
 .select2-container--default .select2-results__option--selected {
@@ -2489,7 +2489,7 @@ select.form--control {
 }
 
 .fileholder-drag-drop-title {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .fileholder-drag-drop-icon svg path:nth-child(2) {
@@ -2562,7 +2562,7 @@ select.form--control {
 }
 
 .filepond--drop-label.filepond--drop-label label {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .filepond--panel-root {
@@ -2619,7 +2619,7 @@ select.form--control {
     list-style: none;
     min-height: 40px;
     outline: none;
-    color: #6e768e;
+    color: #00a69d;
     padding-left: 18px;
     padding-right: 29px;
     text-align: left;
@@ -2630,7 +2630,7 @@ select.form--control {
 
 .nice-select .option.disabled {
     background-color: transparent;
-    color: #6e768e;
+    color: #00a69d;
     cursor: default;
 }
 
@@ -2640,7 +2640,7 @@ select.form--control {
 }
 
 .nice-select .option.selected.focus {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .nice-select .list {
@@ -2651,7 +2651,7 @@ select.form--control {
 
 .nice-select .current {
     display: block;
-    color: #6e768e;
+    color: #00a69d;
     font-weight: 700;
 }
 
@@ -2660,7 +2660,7 @@ select.form--control {
 }
 
 .nice-select:focus .current {
-    color: #6e768e;
+    color: #00a69d;
     font-weight: 700;
 }
 
@@ -3417,7 +3417,7 @@ select.form--control {
 
 .header-top .header-notification-area .notification-wrapper span {
     font-size: 12px;
-    color: #6e768e;
+    color: #00a69d;
 }
 
 .header-top .header-notification-area .notification-wrapper.active {
@@ -3864,7 +3864,7 @@ select.form--control {
     top: 5px;
     right: 0;
     font-family: "Font Awesome 5 Free";
-    color: #6e768e;
+    color: #00a69d;
     font-weight: 700;
     content: "\f105";
     font-size: 12px;
@@ -3884,7 +3884,7 @@ select.form--control {
 
 .sidebar-menu .sidebar-menu-item .sidebar-submenu .sidebar-menu-item {
     letter-spacing: normal;
-    color: #6e768e;
+    color: #00a69d;
     font-weight: 400;
     margin-top: 0;
     padding-left: 2px;
@@ -4079,11 +4079,11 @@ body.dark-topbar .dashboard-title-part .title {
 }
 
 body.dark-topbar .dashboard-title-part p {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 body.dark-topbar .dashboard-title-part .dashboard-path {
-    color: #6e768e;
+    color: #00a69d;
 }
 
 body.dark-sidebar .header-link {
