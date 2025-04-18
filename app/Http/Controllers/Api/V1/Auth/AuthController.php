@@ -165,7 +165,9 @@ class AuthController extends Controller
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollBack();
-                $error = ['error' => ['Something went worng! Please try again']];
+                $error = [
+        'error' => ['Something went wrong! Please try again', 'Details' => $e->getMessage()]
+    ];
                 return ApiResponse::error($error);
             }
         }
