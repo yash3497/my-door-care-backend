@@ -56,7 +56,7 @@ class WebSettingsController extends Controller
                 "APP_TIMEZONE"  => $validated['timezone'],
             ]);
         } catch (Exception $e) {
-            return back()->with(['error' => ['Something went worng! Please try again.']]);
+            return back()->with(['error' => ['Something went wrong! Please try again.', $e->getMessage()]]);
         }
 
         return back()->with(['success' => ['Basic settings updated successfully!']]);
