@@ -13,67 +13,69 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\TransactionSetting;
 use App\Http\Helpers\Api\Helpers as ApiResponse;
 
+use Illuminate\Support\Facades\Log;
+
 class NannyListController extends Controller
 {
-    function index(Request $request)
-    {
+    public function index(Request $request)
+{
+    try {
+        Log::info('API: Nanny index called.');
+
         $user_city = Str::slug(auth()->user()->address->city);
+        Log::info('User City: ' . $user_city);
+
         $service_area = ServiceArea::get();
+        Log::info('Fetched Service Areas', ['count' => $service_area->count()]);
 
-        $area = '';
-        $profession_type = '';
-        $work_experience = '';
-        $work_capability = '';
-        $charge = '';
+        // Initialize filters
+        $area = $request->area ?? '';
+        $profession_type = $request->profession_type ?? '';
+        $work_experience = $request->work_experience ?? '';
+        $work_capability = $request->work_capability ?? '';
+        $charge = $request->charge ?? '';
 
-        if (isset($request->area) && !empty($request->area)) {
-            $area = $request->area;
-        }
-        if (isset($request->profession_type) && !empty($request->profession_type)) {
-            $profession_type = $request->profession_type;
-        }
-        if (isset($request->work_experience) && !empty($request->work_experience)) {
-            $work_experience = $request->work_experience;
-        }
-        if (isset($request->work_capability) && !empty($request->work_capability)) {
-            $work_capability = $request->work_capability;
-        }
-        if (isset($request->charge) && !empty($request->charge)) {
-            $charge = $request->charge;
-        }
-        $query = Nanny::where('kyc_verified', 1)->with('review', 'userRequests', 'nannyProfession')->whereHas('nannyProfession', function ($q) use ($user_city, $area, $profession_type, $work_experience, $work_capability, $charge) {
+        Log::info('Request Filters', compact('area', 'profession_type', 'work_experience', 'work_capability', 'charge'));
 
-            if (!empty($area)) {
-                $q->where('service_area', $area);
-            } else {
-                $q->where('service_area', $user_city);
-            }
-            if (!empty($profession_type)) {
-                $q->where('profession_type', $profession_type);
-            }
-            if (!empty($work_experience)) {
-                $q->where('work_experience', $work_experience);
-            }
-            if (!empty($work_expework_capabilityrience)) {
-                $q->where('work_capability', $work_capability);
-            }
-            if (!empty($charge)) {
-                $q->where('charge', $charge);
-            }
-        })->orderBy('id', 'DESC');
+        $query = Nanny::where('kyc_verified', 1)
+            ->with('review', 'userRequests', 'nannyProfession')
+            ->whereHas('nannyProfession', function ($q) use ($user_city, $area, $profession_type, $work_experience, $work_capability, $charge) {
+                Log::info('Inside whereHas - Applying Filters');
+
+                $q->when(!empty($area), function ($q) use ($area) {
+                    $q->where('service_area', $area);
+                    Log::info('Filter applied: area = ' . $area);
+                }, function ($q) use ($user_city) {
+                    $q->where('service_area', $user_city);
+                    Log::info('Default area used: ' . $user_city);
+                });
+
+                if (!empty($profession_type)) {
+                    $q->where('profession_type', $profession_type);
+                    Log::info('Filter applied: profession_type = ' . $profession_type);
+                }
+                if (!empty($work_experience)) {
+                    $q->where('work_experience', $work_experience);
+                    Log::info('Filter applied: work_experience = ' . $work_experience);
+                }
+                if (!empty($work_capability)) {
+                    $q->where('work_capability', $work_capability);
+                    Log::info('Filter applied: work_capability = ' . $work_capability);
+                }
+                if (!empty($charge)) {
+                    $q->where('charge', $charge);
+                    Log::info('Filter applied: charge = ' . $charge);
+                }
+            })
+            ->orderBy('id', 'DESC');
 
         $nannies = $query->limit(6)->get();
 
-        $area = ServiceArea::get();
+        Log::info('Fetched Nannies Count: ' . $nannies->count());
+
         $profession_type = [
-            [
-                'value' => 1,
-                'label' => 'Baby Sitter'
-            ],
-            [
-                'value' => 2,
-                'label' => 'Pet Sitter'
-            ]
+            ['value' => 1, 'label' => 'Baby Sitter'],
+            ['value' => 2, 'label' => 'Pet Sitter']
         ];
 
         $work_experience = [
@@ -88,38 +90,30 @@ class NannyListController extends Controller
         ];
 
         $work_capability = [
-            '12 - 24 Hours',
-            '2 Day',
-            '3 Day',
-            '5 Day',
-            '1 Week',
-            '2 Week',
-            '1 Month',
+            '12 - 24 Hours', '2 Day', '3 Day', '5 Day', '1 Week', '2 Week', '1 Month',
         ];
-        $charge = [
-            'Hourly',
-            'Daily',
-            'Weekly',
-            'Monthly',
-        ];
+
+        $charge = ['Hourly', 'Daily', 'Weekly', 'Monthly'];
 
         $data = [
             'base_url' => url(''),
             'default_image' => "public/backend/images/default/profile-default.webp",
-            "image_path"    => "public/frontend/nanny",
+            "image_path" => "public/frontend/nanny",
             'nannies' => $nannies,
-            'area' => $area,
+            'area' => $service_area,
             'profession_type' => $profession_type,
             'work_experience' => $work_experience,
             'work_capability' => $work_capability,
             'charge' => $charge
-
-
         ];
-        $message = ['success' => [__('All nanny list')]];
 
+        $message = ['success' => [__('All nanny list')]];
         return ApiResponse::success($message, $data);
+    } catch (\Exception $e) {
+        Log::error('Error in index(): ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+        return ApiResponse::error(['error' => ['Something went wrong! Please try again later.']]);
     }
+}
     function nannyDetails($id)
     {
         $nanny = Nanny::with('review', 'userRequests', 'nannyProfession')->findOrFail($id);
