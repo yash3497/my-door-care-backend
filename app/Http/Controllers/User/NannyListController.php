@@ -55,7 +55,7 @@ class NannyListController extends Controller
             if (!empty($work_experience)) {
                 $q->where('work_experience', $work_experience);
             }
-            if (!empty($work_expework_capabilityrience)) {
+            if (!empty($work_capability)) {
                 $q->where('work_capability', $work_capability);
             }
             if (!empty($charge)) {
