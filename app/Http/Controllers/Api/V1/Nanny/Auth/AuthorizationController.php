@@ -21,6 +21,8 @@ use App\Http\Helpers\Api\Helpers as ApiResponse;
 use App\Models\Admin\ServiceArea;
 use App\Notifications\Nanny\Auth\SendAuthorizationCode;
 
+use Illuminate\Support\Facades\Log;
+
 
 class AuthorizationController extends Controller
 {
@@ -200,13 +202,11 @@ class AuthorizationController extends Controller
     }
     function professionSubmit(Request $request)
     {
-
         if ($request->profession_type == '1') {
             $rules = [
                 'baby_gender' => 'required',
                 'baby_age' => 'required',
                 'baby_number' => 'required',
-
             ];
         } else {
             $rules = [
@@ -216,6 +216,7 @@ class AuthorizationController extends Controller
                 'number' => 'required',
             ];
         }
+    
         $work_work_experience = [
             'work_experience' => 'required',
             'work_capability' => 'required',
@@ -224,21 +225,17 @@ class AuthorizationController extends Controller
             'amount' => 'required',
             'bio' => 'required',
         ];
+    
         $total_rules = array_merge($rules, $work_work_experience);
-
         $validated = Validator::make($request->all(), $total_rules)->validate();
-
-
-
+    
         if ($request->profession_type == '1') {
-
             $validated['profession_type_details'] = [
                 'baby_gender' => $validated['baby_gender'],
                 'baby_age' => $validated['baby_age'],
                 'baby_number' => $validated['baby_number'],
             ];
         } elseif ($request->profession_type == '2') {
-
             $validated['profession_type_details'] = [
                 'pet_type' => $validated['pet_type'],
                 'gender' => $validated['gender'],
@@ -246,31 +243,42 @@ class AuthorizationController extends Controller
                 'number' => $validated['number'],
             ];
         }
-
+    
         $validated['nanny_id'] = auth()->user()->id;
         $validated['profession_type'] = $request->profession_type;
-
-
+    
         try {
             DB::beginTransaction();
+    
+            // 🔍 Add log before creating
+            Log::info('Storing Nanny Profession Data', $validated);
+    
             $profession = NannyProfession::create($validated);
+    
+            // 🔍 Add log after saving to DB
+            Log::info('Nanny Profession Stored', ['id' => $profession->id]);
+    
             $nanny_id = auth()->user()->id;
             $profession = NannyProfession::where('nanny_id', $nanny_id)->first();
+    
             if ($profession) {
                 $nanny = Nanny::findOrFail($nanny_id);
                 $nanny->update([
                     'profession_submitted' => 1,
                 ]);
+    
+                Log::info('Nanny Updated', ['nanny_id' => $nanny_id]);
             }
+    
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            $error = ['error' => ['Something went worng! Please try again']];
+            Log::error('Error storing profession data', ['error' => $e->getMessage()]);
+            $error = ['error' => ['Something went wrong! Please try again']];
             return ApiResponse::error($error);
         }
-
-        $message =  ['success' => ['Profession submited successful']];
-
+    
+        $message = ['success' => ['Profession submitted successfully']];
         return ApiResponse::success($message, $profession);
     }
 }
